@@ -1,28 +1,23 @@
 pipeline {
     agent any
-    stages {
-        stage('Checkout') {
+    tools {
+        maven 'Maven'
+            }
+        }
+     stages {
+        stage('Initialize') {
             steps {
-                git url: 'https://github.com/marieme1807/webapps.git'
+                sh '''
+                      echo "PATH = ${PATH}"
+                      echo "M2_HOME = ${M2_HOME}"
+                   '''
+              }
             }
         }
         stage('Build') {
             steps {
-                echo 'Building...'
-                // Insert build steps here
+                sh 'mvn clean package'
             }
         }
-        stage('Test') {
-            steps {
-                echo 'Testing...'
-                // Insert test steps here
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying...'
-                // Insert deploy steps here
-            }
-        }
-    }
+    
 }
